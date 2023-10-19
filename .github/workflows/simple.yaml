@@ -1,9 +1,9 @@
 name: Shell Commands
 
-on: [push]
+on: [push]                           # You can have an array of events for the workflow to run against.
 
 jobs:
-  run-shell-command:
+  run-shell-command:                 # Make sure to use spaces when you indent, not tabs !
     runs-on: ubuntu-latest
     steps:
       - name: echo a string
@@ -16,10 +16,10 @@ jobs:
         run: |
           import platform
           print(platform.processor())
-        shell: python
+        shell: python                  # You need to make sure you use the correct shell otherwise this will error.
   run-windows-command:
     runs-on: windows-latest
-    needs: ["run-shell-command"] 
+    needs: ["run-shell-command"]       # If we don't want to run these jobs in parallel but in sequence, use this.
     steps:
       - name: Directory Powershell
         run: Get-Location
