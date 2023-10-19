@@ -7,9 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: List Files                                   # This will show where our files are stored on the GitHub VM
-        run: |
+        run: |                                             # shows path /home/runner/work/github-actions-test/github-actions-test
           pwd
-          ls
+          ls -a
+      - name: Checkout
+        uses: actions/checkout@v1                          # This authenticates with repository and checkouts into above path.
+      - name: List Files After Checkout                   
+        run: |                                            
+          pwd
+          ls -a
       - name: Simple JavaScript Action
         id: greet                                          # We need this Id if we want to reference a step that produces an output
         uses: actions/hello-world-javascript-action@v1     # External published GitHub Action
