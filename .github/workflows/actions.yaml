@@ -10,7 +10,7 @@ jobs:
         run: |                                             # shows path /home/runner/work/github-actions-test/github-actions-test
           pwd
           ls -a
-          echo $GITHUB_SHA
+          echo "GitHub Commit Id is: " $GITHUB_SHA
           echo $GITHUB_REPOSITORY
           echo $GITHUB_WORKSPACE
           echo "${{ github.token }}"                                 
