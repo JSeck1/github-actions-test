@@ -1,6 +1,6 @@
 name: Shell Commands
 
-on: [push]                           # You can have an array of events for the workflow to run against.
+on: [pull_request]                           # You can have an array of events for the workflow to run against.
 
 jobs:
   run-shell-command:                 # Make sure to use spaces when you indent, not tabs !
