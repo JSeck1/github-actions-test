@@ -1,25 +1,17 @@
 name: Context testing
-on: push
+on: [push, pull_request]
 
 jobs:
-  functions:
+  dump_contexts_to_log:
     runs-on: ubuntu-latest
-    steps:
-      - name: dump
-        run: |
-          echo ${{ contains('hello', 'll') }}
-          echo ${{ startsWith('hello', 'he') }}
-          echo ${{ endsWith('hello', 'lo') }}
-          echo ${{ format('Hello {0} {1} {2}', 'World', '!', '!') }
-          }}
-  one:
-    runs-on: ubuntu-latest
+    if: github.event_name == 'push'   # We got Event Name from the JSON below which we can use in an expression.
     steps:
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+        run: echho "$GITHUB_CONTEXT"   # Echo is spelt wrong so this job would fail.  Once failed, nothing else runs unless you specify if below.
       - name: Dump job context
+        if: failure()                  # This should still run, despite the previous job failing.
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
         run: echo "$JOB_CONTEXT"
@@ -28,6 +20,7 @@ jobs:
           STEPS_CONTEXT: ${{ toJson(steps) }}
         run: echo "$STEPS_CONTEXT"
       - name: Dump runner context
+        if: always()                   # This always runs even if any previous steps have failed.
         env:
           RUNNER_CONTEXT: ${{ toJson(runner) }}
         run: echo "$RUNNER_CONTEXT"
