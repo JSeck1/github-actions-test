@@ -9,7 +9,7 @@ jobs:
         node_version: [6,8,10]
       # max-parallel: 2            # The array contains three jobs which run in parallel.  This ensures only 2 run in a parallel at any one time.  Github runs max by default
       fail-fast: true              # Fail Fast true means if one fails, it all fails, false means they run independently of each other
-    runs-on: ${{ maxtrix.os }}     # So this would run for each os, each node version - 9 iterations
+    runs-on: ${{ matrix.os }}     # So this would run for each os, each node version - 9 iterations
     steps:
       - name: Log Node Version
         run: node -v
