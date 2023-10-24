@@ -3,12 +3,19 @@ on: push
 
 jobs:
   node-version:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        node_version: [6,8,10]
+      # max-parallel: 2            # The array contains three jobs which run in parallel.  This ensures only 2 run in a parallel at any one time.  Github runs max by default
+      fail-fast: true              # Fail Fast true means if one fails, it all fails, false means they run independently of each other
+    runs-on: ${{ maxtrix.os }}     # So this would run for each os, each node version - 9 iterations
     steps:
       - name: Log Node Version
         run: node -v
       - uses: actions/setup-node@v1
         with:
-          node-version: 6
+          node-version: ${{ matrix.node_version }}  # The Job will run 3 times with the maxtrix and this is the iteration in the array
       - name: Log Node Version
         run: node -v
+        
