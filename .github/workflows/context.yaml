@@ -4,6 +4,7 @@ on: [push, pull_request]
 jobs:
   dump_contexts_to_log:
     runs-on: ubuntu-latest
+    timeout-minutes: 360              # By Default, github jobs have 6 hours to run before being cancelled.  If it needs increasing, you can do this.
     if: github.event_name == 'push'   # We got Event Name from the JSON below which we can use in an expression.
     steps:
       - name: Dump GitHub context
@@ -11,7 +12,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echho "$GITHUB_CONTEXT"   # Echo is spelt wrong so this job would fail.  Once failed, nothing else runs unless you specify if below.
       - name: Dump job context
-        if: failure()                  # This should still run, despite the previous job failing.
+        if: failure()                  # This should still run, despite the previous job failing.  You can use continue-on-error: true to run the subsequent steps as well.
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
         run: echo "$JOB_CONTEXT"
