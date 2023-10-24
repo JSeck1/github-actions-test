@@ -1,5 +1,4 @@
 name: Shell Commands
-
 on: [pull_request]                           # You can have an array of events for the workflow to run against.
 
 jobs:
